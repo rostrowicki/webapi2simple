@@ -44,7 +44,7 @@
                 .done(function (data) {
                     $.each(data, function (key, item) {
                         // add list item
-                        $('<li>', { text: formatItem(item) }).append($('#products'));
+                        $('<li>', { text: formatItem(item) }).appendTo($('#products'));
                     })
                 })
                 .fail(function (jqXHR, textStatus, err) {
@@ -58,6 +58,14 @@
 
         function find() {
             var id = $('#prodId').val();
+            if (id == '') {
+                $('#product').text('Empty ID is not allowed');
+                return;
+            }
+            if (isNaN(id) == true) {
+                $('#product').text('ID has to be a number');
+                return;
+            }
             $.getJSON(uri + '/' + id)
                 .done(function (data) {
                     $('#product').text(formatItem(data));
